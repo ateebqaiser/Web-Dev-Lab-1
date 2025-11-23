@@ -1,0 +1,9 @@
+{
+  "products": [
+    { "id": 1, "name": "Keyboard", "price": 25, "category": "Electronics" },
+    { "id": 2, "name": "Mouse", "price": 18, "category": "Electronics" },
+    { "id": 3, "name": "Headphones", "price": 55, "category": "Audio" },
+    { "id": 4, "name": "USB Drive", "price": 12, "category": "Storage" },
+    { "id": 5, "name": "Webcam", "price": 80, "category": "Electronics" }
+  ]
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 10 — Advanced JavaScript (Fetch + ES6)</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .product-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 8px 15px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Product List (Fetched from JSON using ES6)</h2>
+
+<button id="sortAsc">Sort by Price (Low → High)</button>
+<button id="sortDesc">Sort by Price (High → Low)</button>
+<button id="filterCheap">Filter Price < 50</button>
+
+<div id="productContainer"></div>
+
+<script>
+// ----------------------
+// TASK 1: Fetch JSON Data
+// ----------------------
+const fetchProducts = async () => {
+    const response = await fetch("products.json");   // local JSON file
+    const data = await response.json();
+    return data.products;
+};
+
+// ----------------------
+// TASK 2: ES6 Features
+// let/const, arrow functions, template literals, destructuring
+// ----------------------
+const displayProducts = (products) => {
+    const container = document.getElementById("productContainer");
+    container.innerHTML = "";
+
+    products.forEach(({ id, name, price, category }) => {   // DESCTRUCTURING
+        container.innerHTML += `
+            <div class="product-card">
+                <h3>${name}</h3>
+                <p><b>Category:</b> ${category}</p>
+                <p><b>Price:</b> $${price}</p>
+            </div>
+        `;
+    });
+};
+
+// main app
+let globalProducts = [];
+
+fetchProducts().then((products) => {
+    globalProducts = products;
+    displayProducts(globalProducts);
+});
+
+// ----------------------
+// TASK 3: Filtering + Sorting
+// ----------------------
+document.getElementById("sortAsc").addEventListener("click", () => {
+    const sorted = [...globalProducts].sort((a, b) => a.price - b.price);
+    displayProducts(sorted);
+});
+
+document.getElementById("sortDesc").addEventListener("click", () => {
+    const sorted = [...globalProducts].sort((a, b) => b.price - a.price);
+    displayProducts(sorted);
+});
+
+document.getElementById("filterCheap").addEventListener("click", () => {
+    const filtered = globalProducts.filter(p => p.price < 50);
+    displayProducts(filtered);
+});
+</script>
+
+</body>
+</html>
